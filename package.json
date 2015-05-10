@@ -45,11 +45,13 @@
   "scripts": {
     "test": "node test/index.js",
     "runtime": "npm run jshint -s && node test/runtime/ | tap-spec",
-    "cover-runtime": "istanbul cover --report html --print none test/runtime/",
     "jshint": "standard -v",
     "cover-parser": "istanbul cover --report html --print detail test/parser/",
+    "cover-runtime": "istanbul cover --report html --print detail test/runtime/",
+    "cover-checker": "istanbul cover --report html --print detail test/type-checker/",
     "cover": "istanbul cover --report none --print detail test/index.js",
-    "view-cover": "istanbul report html && opn ./coverage/index.html"
+    "view-cover": "istanbul report html && opn ./coverage/index.html",
+    "clean": "rm -r ./coverage/"
   },
   "bin": {
     "jsig": "bin/cli.js"

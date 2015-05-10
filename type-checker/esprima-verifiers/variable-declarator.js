@@ -14,6 +14,7 @@ function variableDeclarator(node, meta, callback) {
             return callback(err);
         }
 
+        /* istanbul ignore if */
         if (!jsigAst) {
             console.warn('could not get type for', id);
         }

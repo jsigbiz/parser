@@ -49,6 +49,7 @@ function createFromNode(parentMeta, node, jsigType) {
     var fMeta = FunctionMeta(parentMeta);
 
     node.params.forEach(function checkParam(param, index) {
+        /* istanbul ignore if */
         if (param.type !== 'Identifier') {
             console.warn('unknown param node', param.type);
             return;

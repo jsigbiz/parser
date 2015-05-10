@@ -12,11 +12,13 @@ var NonStringError = TypedError({
 module.exports = checkTypeLiteral;
 
 function checkTypeLiteral(parent, child) {
+    /* istanbul ignore if */
     if (!parent.builtin) {
         console.warn('skipping non builtin type literal');
         return null;
     }
 
+    /* istanbul ignore if */
     if (child.type !== 'typeLiteral') {
         console.warn('skipping non typeLiteral child',
             child.type);
@@ -25,6 +27,7 @@ function checkTypeLiteral(parent, child) {
 
     var name = parent.name;
 
+    /* istanbul ignore else */
     if (name === 'String') {
         if (child.name !== 'String') {
             return NonStringError({

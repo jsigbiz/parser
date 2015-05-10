@@ -32,6 +32,7 @@ function callExpression(node, meta, callback) {
 
     var identifiers = meta.currentMeta.identifiers;
 
+    /* istanbul ignore if */
     if (!identifiers[callee]) {
         console.warn('skipping call expression', callee);
         return callback(null);

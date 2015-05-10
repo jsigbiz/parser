@@ -44,6 +44,7 @@ var verifiers = {
 function verify(node, meta, callback) {
     assert(meta, 'must have a meta');
 
+    /* istanbul ignore else */
     if (verifiers[node.type]) {
         verifiers[node.type](node, meta, callback);
     } else {

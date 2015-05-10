@@ -18,6 +18,7 @@ function inferTypeFromRequire(node, meta, callback) {
         uri = path.resolve(dirname, arg);
     }
 
+    /* istanbul ignore if */
     if (!uri) {
         console.log('arg', node);
         console.warn('skipping require analysis for', arg);

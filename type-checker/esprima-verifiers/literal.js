@@ -9,11 +9,13 @@ module.exports = literal;
 function literal(node, meta, callback) {
     var value = node.value;
 
+    /* istanbul ignore if */
     if (!value) {
         console.warn('cannot get value for node', value);
         return callback(null);
     }
 
+    /* istanbul ignore else */
     if (typeof value === 'string') {
         callback(null, AST.literal('String'));
     } else if (typeof value === 'number') {

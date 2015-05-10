@@ -11,6 +11,7 @@ module.exports = binaryExpression;
 
 function binaryExpression(node, meta, callback) {
     var operatorType = operators[node.operator];
+    /* istanbul ignore if */
     if (!operatorType) {
         console.warn('skipping operator', node.operator);
         return callback(null);

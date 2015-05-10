@@ -16,6 +16,7 @@ function checkSubType(parent, child) {
     assert(parent && parent.type, 'parent must have type');
     assert(child && child.type, 'child must have type');
 
+    /* istanbul ignore else */
     if (checkers[parent.type]) {
         return checkers[parent.type](parent, child);
     } else {

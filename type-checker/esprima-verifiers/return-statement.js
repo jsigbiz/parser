@@ -15,6 +15,7 @@ function returnStatement(node, meta, callback) {
             return callback(err);
         }
 
+        /* istanbul ignore if */
         if (!jsigType) {
             console.log('expected jsigType from return',
                 'statement', node.argument.type);

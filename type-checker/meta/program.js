@@ -64,7 +64,7 @@ function ProgramMeta(ast, filename) {
     this.moduleExportsNode = null;
     this.moduleExportsType = null;
 
-    this.currentMeta = new FileMeta(this);
+    this.currentMeta = FileMeta(this);
 
     this.currentMeta.identifiers.require = {
         type: 'variable',
@@ -143,6 +143,7 @@ function storeAndExpand(jsigAst) {
         return;
     }
 
+    /* istanbul ignore if */
     if (!self.moduleExportsNode) {
         console.warn('got a type for file', self.filename,
             'but got no module.exports');
@@ -159,6 +160,7 @@ function storeAndExpand(jsigAst) {
 
     var node = self.moduleExportsNode;
 
+    /* istanbul ignore else */
     if (node.type === 'Identifier') {
         self.currentMeta.addVar(
             node.name, jsigType.typeExpression
