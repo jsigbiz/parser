@@ -1,6 +1,7 @@
 'use strict';
 
 var console = require('console');
+var assert = require('assert');
 
 module.exports = FunctionMeta;
 
@@ -28,15 +29,24 @@ function FunctionMeta(parentMeta) {
         return new FunctionMeta(parentMeta);
     }
 
+    assert(parentMeta, 'must specify parentMeta');
+
     this.parent = parentMeta;
     this.identifiers = Object.create(parentMeta.identifiers);
     this.returnValueType = null;
     this.type = 'function';
 }
 
+FunctionMeta.prototype.addVar = function addVar(id, jsigType) {
+    this.identifiers[id] = {
+        type: 'variable',
+        jsig: jsigType
+    };
+};
+
 FunctionMeta.createFromNode =
 function createFromNode(parentMeta, node, jsigType) {
-    var fMeta = FunctionMeta(parentMeta.currentMeta);
+    var fMeta = FunctionMeta(parentMeta);
 
     node.params.forEach(function checkParam(param, index) {
         if (param.type !== 'Identifier') {

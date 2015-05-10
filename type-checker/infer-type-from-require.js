@@ -3,7 +3,7 @@
 var path = require('path');
 var console = require('console');
 
-var typeCheck = require('../../type-checker/');
+var typeCheck = require('../type-checker/');
 
 module.exports = inferTypeFromRequire;
 

@@ -29,3 +29,10 @@ function FileMeta(parentMeta) {
     this.identifiers = Object.create(parentMeta.identifiers);
     this.type = 'file';
 }
+
+FileMeta.prototype.addVar = function addVar(id, jsigType) {
+    this.identifiers[id] = {
+        type: 'variable',
+        jsig: jsigType
+    };
+};

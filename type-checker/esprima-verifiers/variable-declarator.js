@@ -18,11 +18,7 @@ function variableDeclarator(node, meta, callback) {
             console.warn('could not get type for', id);
         }
 
-        var identifiers = meta.currentMeta.identifiers;
-        identifiers[id] = {
-            type: 'variable',
-            jsig: jsigAst
-        };
+        meta.currentMeta.addVar(id, jsigAst);
         callback(null);
     });
 }
