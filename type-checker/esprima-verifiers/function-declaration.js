@@ -1,7 +1,11 @@
-var FunctionMeta = require('../meta/function.js')
-var verify = require('../verify-esprima-ast.js')
+'use strict';
 
-module.exports = functionDeclaration
+var console = require('console');
+
+var FunctionMeta = require('../meta/function.js');
+var verify = require('../verify-esprima-ast.js');
+
+module.exports = functionDeclaration;
 
 /*  must verify this function is type sound.
 
@@ -15,7 +19,7 @@ module.exports = functionDeclaration
 
     The way we check this thing is good recursively is creating
         a new meta object with a identifiers object with the
-        types of the function parameters pre-populated and 
+        types of the function parameters pre-populated and
         a __proto__ that is the module-level identifiers.
 
     i.e. we should call verify on the body of the function
@@ -24,40 +28,46 @@ module.exports = functionDeclaration
 
 */
 function functionDeclaration(node, meta, callback) {
-    var identifier = meta.identifiers[node.id.name]
+    var identifiers = meta.currentMeta.identifiers;
+    var identifier = identifiers[node.id.name];
 
     // if not identifier then hard mode
     if (!identifier) {
-        return typeInferFunctionDeclaration(node, meta, callback)
+        return typeInferFunctionDeclaration(node, meta, callback);
     }
 
-    var type = identifier.jsig
+    var type = identifier.jsig;
 
-    var fMeta = FunctionMeta(meta)
+    var fMeta = FunctionMeta(meta.currentMeta);
 
-    node.params.forEach(function (param, index) {
+    node.params.forEach(function checkParam(param, index) {
         if (param.type !== 'Identifier') {
-            console.warn('unknown param node', param.type)
-            return
+            console.warn('unknown param node', param.type);
+            return;
         }
 
-        var name = param.name
-        var paramType = type.args[index]
+        var name = param.name;
+        var paramType = type.args[index];
 
         fMeta.identifiers[name] = {
             type: 'variable',
             jsig: paramType
-        }
-    })
+        };
+    });
 
-    fMeta.returnValueType = type.result
+    fMeta.returnValueType = type.result;
+    meta.currentMeta = fMeta;
 
-    verify(node.body, fMeta, callback)
+    verify(node.body, meta, function onVerified(err, fType) {
+        meta.currentMeta = fMeta.parent;
+
+        callback(err, fType);
+    });
 }
 
 function typeInferFunctionDeclaration(node, meta, callback) {
     console.warn('skipping all type inference',
-        node.id.name)
+        node.id.name);
 
-    callback(null)
+    callback(null);
 }

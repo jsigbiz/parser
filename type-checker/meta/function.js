@@ -1,4 +1,6 @@
-module.exports = FunctionMeta
+'use strict';
+
+module.exports = FunctionMeta;
 
 /*  FunctionMeta is threaded through every verifier which
     veirfiers that an AST node inside a function body is
@@ -7,7 +9,7 @@ module.exports = FunctionMeta
     This is a place to put meta data about the state of the
     function so taht each node in the AST can access it.
 
-    Currently it is 
+    Currently it is
 
     {
         parent: MetaObject,
@@ -21,11 +23,11 @@ module.exports = FunctionMeta
 */
 function FunctionMeta(parentMeta) {
     if (!(this instanceof FunctionMeta)) {
-        return new FunctionMeta(parentMeta)
+        return new FunctionMeta(parentMeta);
     }
 
-    this.parent = parentMeta
-    this.identifiers = Object.create(parentMeta.identifiers)
-    this.returnValueType = null
-    this.type = 'function'
+    this.parent = parentMeta;
+    this.identifiers = Object.create(parentMeta.identifiers);
+    this.returnValueType = null;
+    this.type = 'function';
 }

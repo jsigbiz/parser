@@ -1,13 +1,15 @@
-var series = require('run-series')
+'use strict';
 
-var verify = require('../verify-esprima-ast.js')
+var series = require('run-series');
 
-module.exports = blockStatement
+var verify = require('../verify-esprima-ast.js');
+
+module.exports = blockStatement;
 
 function blockStatement(node, meta, callback) {
-    var tasks = node.body.map(function (node) {
-        return verify.bind(null, node, meta)
-    })
+    var tasks = node.body.map(function verifyNode(st) {
+        return verify.bind(null, st, meta);
+    });
 
-    series(tasks, callback)
+    series(tasks, callback);
 }

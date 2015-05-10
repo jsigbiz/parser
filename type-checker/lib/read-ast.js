@@ -1,14 +1,16 @@
-var fs = require('fs')
-var esprima = require('esprima')
+'use strict';
 
-module.exports = readAST
+var fs = require('fs');
+var esprima = require('esprima');
+
+module.exports = readAST;
 
 function readAST(filename, callback) {
-    fs.readFile(filename, 'utf8', function (err, content) {
+    fs.readFile(filename, 'utf8', function onContent(err, content) {
         if (err) {
-            return callback(err)
+            return callback(err);
         }
 
-        callback(null, esprima.parse(content))
-    })
+        callback(null, esprima.parse(content));
+    });
 }

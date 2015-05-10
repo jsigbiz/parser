@@ -1,4 +1,6 @@
-var AST = require('../../ast.js')
+'use strict';
+
+var AST = require('../../ast.js');
 
 module.exports = AST.functionType({
     args: [
@@ -6,4 +8,4 @@ module.exports = AST.functionType({
         AST.literal('String')
     ],
     result: AST.literal('String')
-})
+});

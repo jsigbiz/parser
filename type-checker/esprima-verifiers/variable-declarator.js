@@ -1,23 +1,28 @@
-var verify = require('../verify-esprima-ast.js')
+'use strict';
 
-module.exports = variableDeclarator
+var console = require('console');
+
+var verify = require('../verify-esprima-ast.js');
+
+module.exports = variableDeclarator;
 
 function variableDeclarator(node, meta, callback) {
-    var id = node.id.name
+    var id = node.id.name;
 
-    verify(node.init, meta, function (err, jsigAst) {
+    verify(node.init, meta, function verifyDec(err, jsigAst) {
         if (err) {
-            return callback(err)
+            return callback(err);
         }
 
         if (!jsigAst) {
-            console.warn('could not get type for', id)
+            console.warn('could not get type for', id);
         }
 
-        meta.identifiers[id] = {
+        var identifiers = meta.currentMeta.identifiers;
+        identifiers[id] = {
             type: 'variable',
             jsig: jsigAst
-        }
-        callback(null)
-    })
+        };
+        callback(null);
+    });
 }

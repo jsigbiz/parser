@@ -1,17 +1,20 @@
-var JsigAST = require('../../ast.js')
+'use strict';
+
+var JsigAST = require('../../ast.js');
+var FileMeta = require('./file.js');
 
 var requireType = JsigAST.functionType({
     args: [JsigAST.literal('String')],
     result: JsigAST.literal('Any')
-})
-requireType.isNodeRequireToken = true
+});
+requireType.isNodeRequireToken = true;
 
 var moduleType = JsigAST.object({
     exports: JsigAST.literal('Any')
-})
-moduleType.isNodeModuleToken = true
+});
+moduleType.isNodeModuleToken = true;
 
-module.exports = ProgramMeta
+module.exports = ProgramMeta;
 
 /*  ProgramMeta is threaded through every verifier which
     verifies that an AST node is type sound.
@@ -22,41 +25,43 @@ module.exports = ProgramMeta
     currently it is
 
     {
+        type: 'program'
         ast: EsprimaASTNodeForFile,
         filename: filenameOfAst,
-        identifiers: Object<String, {
-            type: 'variable' | 'function',
-            jsig: JsigASTNode
-        }>,
-        moduleExportsNode: EsprimaASTNode,
-        moduleExportsType: JsigASTNode,
         jsigUri: stringUriToJsigFile,
         jsigAst: jsigAstForFile,
-        type: 'program'
+
+        moduleExportsNode: EsprimaASTNode,
+        moduleExportsType: JsigASTNode,
+
+        currentMeta: Meta
     }
 
     We prepopulate meta with known identifiers and their types
 */
 function ProgramMeta(ast, filename) {
     if (!(this instanceof ProgramMeta)) {
-        return new ProgramMeta(ast, filename)
+        return new ProgramMeta(ast, filename);
     }
 
-    this.ast = ast
-    this.filename = filename
-    this.identifiers = {}
-    this.moduleExportsNode = null
-    this.moduleExportsType = null
-    this.jsigUri = null
-    this.jsigAst = null
-    this.type = 'program'
+    this.ast = ast;
+    this.filename = filename;
+    this.identifiers = {};
+    this.jsigUri = null;
+    this.jsigAst = null;
+    this.type = 'program';
 
-    this.identifiers.require = {
+    this.moduleExportsNode = null;
+    this.moduleExportsType = null;
+
+    this.currentMeta = new FileMeta(this);
+
+    this.currentMeta.identifiers.require = {
         type: 'variable',
         jsig: requireType
-    }
-    this.identifiers.module = {
+    };
+    this.currentMeta.identifiers.module = {
         type: 'variable',
         jsig: moduleType
-    }
+    };
 }
