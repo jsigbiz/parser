@@ -28,7 +28,9 @@ var lexemes = {
     number: lexeme(Parsimmon.regex(/\-?[0-9]+/i)),
     nullWord: lexeme(Parsimmon.string('null')),
     undefinedWord: lexeme(Parsimmon.string('undefined')),
-    asWord: lexeme(Parsimmon.string('as'))
+    asWord: lexeme(Parsimmon.string('as')),
+    openBrace: lexeme(Parsimmon.string('(')),
+    closeBrace: lexeme(Parsimmon.string(')'))
 };
 
 lexemes.label = lexemes.labelName
