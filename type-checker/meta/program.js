@@ -150,6 +150,12 @@ function storeAndExpand(jsigAst) {
     }
 
     self.moduleExportsType = jsigType.typeExpression;
+    self.currentMeta.identifiers.module = {
+        type: 'variable',
+        jsig: JsigAST.object({
+            exports: jsigType.typeExpression
+        })
+    };
 
     var node = self.moduleExportsNode;
 

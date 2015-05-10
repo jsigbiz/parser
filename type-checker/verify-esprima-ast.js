@@ -36,7 +36,9 @@ var verifiers = {
     'Identifier':
         require('./esprima-verifiers/identifier.js'),
     'AssignmentExpression':
-        require('./esprima-verifiers/assignment-expression.js')
+        require('./esprima-verifiers/assignment-expression.js'),
+    'MemberExpression':
+        require('./esprima-verifiers/member-expression.js')
 };
 
 function verify(node, meta, callback) {
