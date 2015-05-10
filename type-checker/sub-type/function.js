@@ -1,6 +1,6 @@
 'use strict';
 
-var console = require('console');
+// var console = require('console');
 var assert = require('assert');
 var TypedError = require('error/typed');
 
