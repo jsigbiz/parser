@@ -1,12 +1,10 @@
 'use strict';
 
-var path = require('path');
 var series = require('run-series');
 var console = require('console');
 
 var verify = require('../verify-esprima-ast.js');
 var inferTypeFromRequire = require('../infer-type-from-require.js');
-var typeCheck = require('../../type-checker/');
 var checkSubType = require('../check-sub-type.js');
 
 module.exports = callExpression;
