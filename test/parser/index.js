@@ -9,6 +9,7 @@ require('./intersection.js');
 require('./generics.js');
 require('./imports.js');
 require('./tuples.js');
+require('./parser-errors.js');
 
 // integration.js
 require('./integration/min-document.js');

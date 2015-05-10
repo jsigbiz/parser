@@ -33,7 +33,7 @@
     "opn": "^0.1.2",
     "pre-commit": "0.0.4",
     "tap-spec": "^0.1.8",
-    "tape": "^2.12.3",
+    "tape": "4.0.0",
     "uber-standard": "3.6.4"
   },
   "licenses": [
@@ -47,6 +47,7 @@
     "runtime": "npm run jshint -s && node test/runtime/ | tap-spec",
     "cover-runtime": "istanbul cover --report html --print none test/runtime/",
     "jshint": "standard -v",
+    "cover-parser": "istanbul cover --report html --print detail test/parser/",
     "cover": "istanbul cover --report none --print detail test/index.js",
     "view-cover": "istanbul report html && opn ./coverage/index.html"
   },

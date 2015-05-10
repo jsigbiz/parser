@@ -43,10 +43,8 @@ var typeDeclaration = lexemes.label
                 label = label.substr(0, label.length - 1);
             }
 
-            if (expr) {
-                expr.label = label;
-                expr.optional = optional;
-            }
+            expr.label = label;
+            expr.optional = optional;
 
             return expr;
         });

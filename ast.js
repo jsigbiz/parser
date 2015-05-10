@@ -121,8 +121,7 @@ function keyValue(key, value, opts) {
 function value(_value, name, label) {
     name = name ? name :
         _value === 'null' ? 'null' :
-        _value === 'undefined' ? 'undefined' :
-        _value === 'void' ? 'void' : 'unknown';
+        _value === 'undefined' ? 'undefined' : 'unknown';
 
     return {
         type: 'valueLiteral',
