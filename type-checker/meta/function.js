@@ -1,5 +1,7 @@
 'use strict';
 
+var console = require('console');
+
 module.exports = FunctionMeta;
 
 /*  FunctionMeta is threaded through every verifier which
@@ -31,3 +33,26 @@ function FunctionMeta(parentMeta) {
     this.returnValueType = null;
     this.type = 'function';
 }
+
+FunctionMeta.createFromNode =
+function createFromNode(parentMeta, node, jsigType) {
+    var fMeta = FunctionMeta(parentMeta.currentMeta);
+
+    node.params.forEach(function checkParam(param, index) {
+        if (param.type !== 'Identifier') {
+            console.warn('unknown param node', param.type);
+            return;
+        }
+
+        var name = param.name;
+        var paramType = jsigType.args[index];
+
+        fMeta.identifiers[name] = {
+            type: 'variable',
+            jsig: paramType
+        };
+    });
+
+    fMeta.returnValueType = jsigType.result;
+    return fMeta;
+};

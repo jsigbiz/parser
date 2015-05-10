@@ -36,26 +36,9 @@ function functionDeclaration(node, meta, callback) {
         return typeInferFunctionDeclaration(node, meta, callback);
     }
 
-    var type = identifier.jsig;
-
-    var fMeta = FunctionMeta(meta.currentMeta);
-
-    node.params.forEach(function checkParam(param, index) {
-        if (param.type !== 'Identifier') {
-            console.warn('unknown param node', param.type);
-            return;
-        }
-
-        var name = param.name;
-        var paramType = type.args[index];
-
-        fMeta.identifiers[name] = {
-            type: 'variable',
-            jsig: paramType
-        };
-    });
-
-    fMeta.returnValueType = type.result;
+    var fMeta = FunctionMeta.createFromNode(
+        meta.currentMeta, node, identifier.jsig
+    );
     meta.currentMeta = fMeta;
 
     verify(node.body, meta, function onVerified(err, fType) {
