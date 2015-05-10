@@ -8,11 +8,11 @@ var checkSubType = require('../check-sub-type.js');
 
 var NonFunctionError = TypedError({
     message: 'Expected to get a function but found {valueType}',
-    type: 'checker.function.non-function',
+    type: 'checker.subtype.function.non-function',
     valueType: null
 });
 var InvalidArgsCountError = TypedError({
-    type: 'checker.function.invalid-args-count',
+    type: 'checker.subtype.function.invalid-args-count',
     message: 'Expected function to have {parentCount} number ' +
         'of arguments but found {childCount} instead.',
     parentCount: null,

@@ -163,6 +163,9 @@ function storeAndExpand(jsigAst) {
         self.currentMeta.addVar(
             node.name, jsigType.typeExpression
         );
+    } else if (node.type === 'Literal') {
+        // Cannot load literal into identifiers table
+        // do nothing
     } else {
         console.warn('got unknown module.exports node',
             node.type);

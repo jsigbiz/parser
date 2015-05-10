@@ -5,7 +5,7 @@ var TypedError = require('error/typed');
 
 var NonStringError = TypedError({
     message: 'Expected to get a string but found {valueType}',
-    type: 'checker.type-literal.non-string',
+    type: 'checker.subtype.type-literal.non-string',
     valueType: null
 });
 

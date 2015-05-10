@@ -1,3 +1,5 @@
-var sum = require('./index.js')
+'use strict';
 
-sum('2', '4') + 'foo'
+var sum = require('./index.js');
+
+sum('2', '4') + 'foo';

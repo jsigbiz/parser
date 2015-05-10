@@ -2,10 +2,19 @@
 
 var series = require('run-series');
 var console = require('console');
+var TypedError = require('error/typed');
 
 var verify = require('../verify-esprima-ast.js');
 var inferTypeFromRequire = require('../infer-type-from-require.js');
 var checkSubType = require('../check-sub-type.js');
+
+var InvalidCallArgCountError = TypedError({
+    type: 'checker.verifier.call-expr.invalid-call-arg-count',
+    message: 'Expected call expression to have {count} ' +
+        'number of args but found {invalidCount} args',
+    count: null,
+    invalidCount: null
+});
 
 module.exports = callExpression;
 
@@ -38,6 +47,14 @@ function callExpression(node, meta, callback) {
     function onargs(err, args) {
         if (err) {
             return callback(err);
+        }
+
+        // TODO allow optional arguments
+        if (funcType.args.length !== args.length) {
+            return callback(InvalidCallArgCountError({
+                count: funcType.args.length,
+                invalidCount: args.length
+            }));
         }
 
         var errors = args.map(function checkArg(type, index) {
