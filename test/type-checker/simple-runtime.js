@@ -34,13 +34,14 @@ test('compile bad example 1', function t(assert) {
     }, function onMeta(err, meta) {
         assert.ok(err);
 
-        assert.equal(err.message, 'expected string got Number');
+        assert.equal(err.message,
+            'Expected to get a string but found Number');
 
         assert.end();
     });
 });
 
-test('compile bad example 1', function t(assert) {
+test('compile bad example 2', function t(assert) {
     var file = path.join(__dirname, '..',
         'fixtures', 'simple-runtime', 'bad-example-2.js');
 
@@ -49,7 +50,8 @@ test('compile bad example 1', function t(assert) {
     }, function onMeta(err, meta) {
         assert.ok(err);
 
-        assert.equal(err.message, 'expected string got Number');
+        assert.equal(err.message,
+            'Expected to get a string but found Number');
 
         assert.end();
     });
