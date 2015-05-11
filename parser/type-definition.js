@@ -43,16 +43,21 @@ var typeDeclaration = lexemes.label
                 label = label.substr(0, label.length - 1);
             }
 
-            if (expr) {
-                expr.label = label;
-                expr.optional = optional;
-            }
+            expr.label = label;
+            expr.optional = optional;
 
             return expr;
         });
     });
 
-module.exports = typeDeclaration;
+var typeDeclarationWithParen = Parsimmon.alt(
+    typeDeclaration,
+    lexemes.openBrace
+        .then(typeDeclaration)
+        .skip(lexemes.closeBrace)
+);
+
+module.exports = typeDeclarationWithParen;
 
 var typeExpression = require('./type-expression.js');
 var typeFunction = require('./type-function.js');
@@ -60,10 +65,17 @@ var typeObject = require('./type-object.js');
 var typeTuple = require('./type-tuple.js');
 
 function lazyAlt() {
-    return Parsimmon.alt(
+    var baseExpression = Parsimmon.alt(
         typeExpression,
         typeFunction,
         typeObject,
         typeTuple
     ).skip(Parsimmon.optWhitespace);
+
+    return Parsimmon.alt(
+        baseExpression,
+        lexemes.openBrace
+            .then(baseExpression)
+            .skip(lexemes.closeBrace)
+    );
 }

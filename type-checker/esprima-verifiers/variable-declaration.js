@@ -1,13 +1,15 @@
-var parallel = require('run-parallel')
+'use strict';
 
-var verify = require('../verify-esprima-ast.js')
+var parallel = require('run-parallel');
 
-module.exports = variableDeclaration
+var verify = require('../verify-esprima-ast.js');
+
+module.exports = variableDeclaration;
 
 function variableDeclaration(node, meta, callback) {
-    var tasks = node.declarations.map(function (node) {
-        return verify.bind(null, node, meta)
-    })
+    var tasks = node.declarations.map(function verifyDec(dec) {
+        return verify.bind(null, dec, meta);
+    });
 
-    parallel(tasks, callback)
+    parallel(tasks, callback);
 }

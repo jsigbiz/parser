@@ -122,7 +122,7 @@ function value(_value, name, label) {
     name = name ? name :
         _value === 'null' ? 'null' :
         _value === 'undefined' ? 'undefined' :
-        _value === 'void' ? 'void' : 'unknown';
+        /*istanbul ignore next */ 'unknown';
 
     return {
         type: 'valueLiteral',

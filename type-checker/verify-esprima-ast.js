@@ -1,4 +1,9 @@
-/* verify takes an AST node, a meta and a callback
+'use strict';
+
+var console = require('console');
+var assert = require('assert');
+
+/*  verify takes an AST node, a meta and a callback
     it will then verify that the AST node is type sound.
 
     It may return a Jsig AST node in the callback for type
@@ -6,7 +11,7 @@
 
 */
 // break circular references
-module.exports = verify
+module.exports = verify;
 
 var verifiers = {
     'Program': require('./esprima-verifiers/program.js'),
@@ -29,14 +34,21 @@ var verifiers = {
     'Literal':
         require('./esprima-verifiers/literal.js'),
     'Identifier':
-        require('./esprima-verifiers/identifier.js')
-}
+        require('./esprima-verifiers/identifier.js'),
+    'AssignmentExpression':
+        require('./esprima-verifiers/assignment-expression.js'),
+    'MemberExpression':
+        require('./esprima-verifiers/member-expression.js')
+};
 
 function verify(node, meta, callback) {
+    assert(meta, 'must have a meta');
+
+    /* istanbul ignore else */
     if (verifiers[node.type]) {
-        verifiers[node.type](node, meta, callback)
+        verifiers[node.type](node, meta, callback);
     } else {
-        console.warn('skipping verify', node.type)
-        callback(null)
+        console.warn('skipping verify', node.type);
+        callback(null);
     }
 }

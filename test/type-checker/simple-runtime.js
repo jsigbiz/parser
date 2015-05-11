@@ -1,52 +1,127 @@
-var test = require('tape')
-var path = require('path')
+'use strict';
 
-var compile = require('../../bin/type-check.js')
+var test = require('tape');
+var path = require('path');
 
-test('compile good example 1', function (assert) {
+var compile = require('../../bin/type-check.js');
+
+test('compile good example 1', function t(assert) {
     var file = path.join(__dirname, '..',
-        'fixtures', 'simple-runtime', 'good-example-1.js')
+        'fixtures', 'simple-runtime', 'good-example-1.js');
 
     compile({
         _: [file]
-    }, function (err, meta) {
-        assert.ifError(err)
+    }, function onCompiled(err, meta) {
+        assert.ifError(err);
 
-        assert.ok(meta)
+        assert.ok(meta);
 
-        assert.ok(meta && meta.identifiers.require)
-        assert.ok(meta && meta.identifiers.sum)
+        var identifiers = meta.currentMeta.identifiers;
 
-        assert.end()
-    })
-})
+        assert.ok(meta && identifiers.require);
+        assert.ok(meta && identifiers.sum);
 
-test('compile bad example 1', function (assert) {
+        assert.end();
+    });
+});
+
+test('compile bad example 1', function t(assert) {
     var file = path.join(__dirname, '..',
-        'fixtures', 'simple-runtime', 'bad-example-1.js')
+        'fixtures', 'simple-runtime', 'bad-example-1.js');
 
     compile({
         _: [file]
-    }, function (err, meta) {
-        assert.ok(err)
+    }, function onMeta(err, meta) {
+        assert.ok(err);
 
-        assert.equal(err.message, 'expected string got Number')
+        assert.equal(err.message,
+            'Expected to get a string but found Number');
 
-        assert.end()
-    })
-})
+        assert.end();
+    });
+});
 
-test('compile bad example 1', function (assert) {
+test('compile bad example 2', function t(assert) {
     var file = path.join(__dirname, '..',
-        'fixtures', 'simple-runtime', 'bad-example-2.js')
+        'fixtures', 'simple-runtime', 'bad-example-2.js');
 
     compile({
         _: [file]
-    }, function (err, meta) {
-        assert.ok(err)
+    }, function onMeta(err, meta) {
+        assert.ok(err);
 
-        assert.equal(err.message, 'expected string got Number')
+        assert.equal(err.message,
+            'Expected to get a string but found Number');
 
-        assert.end()
-    })
-})
+        assert.end();
+    });
+});
+
+test('compile bad example 3', function t(assert) {
+    var file = path.join(__dirname, '..',
+        'fixtures', 'simple-runtime', 'bad-example-3.js');
+
+    compile({
+        _: [file]
+    }, function onMeta(err, meta) {
+        assert.ok(err);
+
+        assert.equal(err.message,
+            'Expected call expression to have 2 number of ' +
+                'args but found 1 args');
+
+        assert.end();
+    });
+});
+
+test('compile good example 2', function t(assert) {
+    var file = path.join(__dirname, '..',
+        'fixtures', 'simple-runtime', 'good-example-2.js');
+
+    compile({
+        _: [file]
+    }, function onCompiled(err, meta) {
+        assert.ifError(err);
+
+        assert.ok(meta);
+
+        var identifiers = meta.currentMeta.identifiers;
+
+        assert.ok(meta && identifiers.require);
+        assert.ok(meta && identifiers.value);
+
+        assert.end();
+    });
+});
+
+test('compile bad example 4', function t(assert) {
+    var file = path.join(__dirname, '..',
+        'fixtures', 'simple-runtime', 'bad-example-4.js');
+
+    compile({
+        _: [file]
+    }, function onMeta(err, meta) {
+        assert.ok(err);
+
+        assert.equal(err.message,
+            'Expected to get a string but found Number');
+
+        assert.end();
+    });
+});
+
+test('compile bad example 5', function t(assert) {
+    var file = path.join(__dirname, '..',
+        'fixtures', 'simple-runtime', 'bad-example-5.js');
+
+    compile({
+        _: [file]
+    }, function onMeta(err, meta) {
+        assert.ok(err);
+
+        assert.equal(err.message,
+            'Expected to get a string but found Number');
+
+        assert.end();
+    });
+});

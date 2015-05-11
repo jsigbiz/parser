@@ -29,12 +29,12 @@
   "devDependencies": {
     "difflet": "^0.2.6",
     "istanbul": "~0.2.4",
-    "jshint": "^2.5.0",
     "json-diff": "^0.3.1",
     "opn": "^0.1.2",
     "pre-commit": "0.0.4",
     "tap-spec": "^0.1.8",
-    "tape": "^2.12.3"
+    "tape": "4.0.0",
+    "uber-standard": "3.6.4"
   },
   "licenses": [
     {
@@ -43,12 +43,15 @@
     }
   ],
   "scripts": {
-    "test": "node test/index.js | tap-spec",
+    "test": "node test/index.js",
     "runtime": "npm run jshint -s && node test/runtime/ | tap-spec",
-    "cover-runtime": "istanbul cover --report html --print none test/runtime/",
-    "jshint": "jshint --verbose .",
+    "jshint": "standard -v",
+    "cover-parser": "istanbul cover --report html --print detail test/parser/",
+    "cover-runtime": "istanbul cover --report html --print detail test/runtime/",
+    "cover-checker": "istanbul cover --report html --print detail test/type-checker/",
     "cover": "istanbul cover --report none --print detail test/index.js",
-    "view-cover": "istanbul report html && opn ./coverage/index.html"
+    "view-cover": "istanbul report html && opn ./coverage/index.html",
+    "clean": "rm -r ./coverage/"
   },
   "bin": {
     "jsig": "bin/cli.js"

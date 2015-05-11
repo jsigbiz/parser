@@ -1,37 +1,25 @@
-var checkers = {
-    'typeLiteral': checkTypeLiteral
-}
+'use strict';
 
-module.exports = checkSubType
+var console = require('console');
+var assert = require('assert');
+
+// break circular references
+module.exports = checkSubType;
+
+var checkers = {
+    'typeLiteral': require('./sub-type/type-literal.js'),
+    'function': require('./sub-type/function.js')
+};
 
 // returns Error or null
 function checkSubType(parent, child) {
+    assert(parent && parent.type, 'parent must have type');
+    assert(child && child.type, 'child must have type');
+
+    /* istanbul ignore else */
     if (checkers[parent.type]) {
-        return checkers[parent.type](parent, child)
+        return checkers[parent.type](parent, child);
     } else {
-        console.warn('skipping check sub type', parent.type)
-    }
-}
-
-function checkTypeLiteral(parent, child) {
-    if (!parent.builtin) {
-        console.warn('skipping non builtin type literal')
-        return
-    }
-
-    if (child.type !== 'typeLiteral') {
-        console.warn('skipping non typeLiteral child',
-            child.type)
-        return
-    }
-
-    var name = parent.name
-
-    if (name === 'String') {
-        if (child.name !== 'String') {
-            return new Error('expected string got ' + child.name)
-        }
-    } else {
-        console.warn('skipping other builtins', name)
+        console.warn('skipping check sub type', parent.type);
     }
 }
