@@ -1,3 +1,5 @@
+# Deprecated: Replaced by https://github.com/Raynos/jsig2
+
 # parser
 a JavaScript module for parsing [jsig](https://github.com/jsigbiz/spec)
 
